@@ -623,6 +623,49 @@ html{scrollbar-color:var(--s3) transparent}
 .btn,.hsgo,.ct2,.trend button,.si{transition:transform .15s var(--out),background .2s,color .2s,border-color .2s}
 .btn:active,.hsgo:active,.trend button:active{transform:scale(.96)}
 @media (prefers-reduced-motion:reduce){.view.on,.hhead .hrow,.hhead .trend,.hhead .ctabs,.hv.on svg,.hb.on svg,.gh.on svg{animation:none}.card:hover .ph::after,.mc:hover .mci::after{animation:none}.card .ph img.g,.mci img.g{transition:none}}
+/* ---------- collapsible sidebar ---------- */
+.side{transition:width .28s var(--out)}.main{transition:margin-left .28s var(--out)}
+html.side-c .side{width:68px;padding:12px 10px 10px}
+html.side-c .main{margin-left:68px}
+html.side-c .sbrand{flex-direction:column;height:auto;gap:8px;padding:2px 0}
+html.side-c .sbrand .wm,html.side-c .sbrand .thm,html.side-c .ssrch input,html.side-c .ssrch .kbd,html.side-c .si em,html.side-c .acn,html.side-c .acct>svg,html.side-c .sscroll{display:none}
+html.side-c .ssrch{justify-content:center;padding:0;cursor:pointer}
+html.side-c .si{justify-content:center;padding:0;font-size:0;gap:0;height:40px}
+html.side-c .acct{justify-content:center;padding:6px 0}
+html.side-c .snav{flex:1}
+html.side-c .menu.up{left:0;right:auto;width:220px}
+html.side-c #sideTog svg{transform:scaleX(-1)}
+#sideTog svg{transition:transform .28s var(--out)}
+/* ---------- search preview ---------- */
+form.hs{position:relative}
+.sugg{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:40;background:var(--card);border:1px solid var(--line2);border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.28);padding:18px 18px 14px;display:none;max-height:min(70vh,640px);overflow:auto;text-align:left;cursor:default}
+.sugg.on{display:block;animation:vin .22s var(--out)}
+.sugg h4{font-size:13px;font-weight:700;color:var(--t2);margin:0 0 10px}
+.sugg h4+*{margin-bottom:16px}
+.sgchips{display:flex;flex-wrap:wrap;gap:6px}
+.sgchips button{height:32px;padding:0 14px;border-radius:16px;background:var(--s2);font-size:13.5px;font-weight:600;color:var(--t1)}
+.sgchips button:hover{background:var(--s3)}
+.sgtiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sgtile{position:relative;height:96px;border-radius:14px;overflow:hidden;background:var(--s2);text-align:left}
+.sgtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--out)}
+.sgtile:hover img{transform:scale(1.05)}
+.sgtile span{position:absolute;inset:auto 0 0 0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;font-size:14px;font-weight:700}
+.sgres{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px 10px}
+.sgr{text-align:left;min-width:0}
+.sgr .im{display:block;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--s2);position:relative}
+.sgr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--out)}
+.sgr:hover img{transform:scale(1.04)}
+.sgr b{display:block;margin-top:6px;font-size:12.5px;font-weight:600;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sgall{display:flex;align-items:center;justify-content:center;width:100%;height:42px;border-radius:12px;background:var(--s2);font-size:14px;font-weight:700;color:var(--t1);margin-top:4px}
+.sgall:hover{background:var(--s3)}
+.sgnone{font-size:14px;color:var(--t3);padding:6px 2px 12px}
+/* ---------- wider canvas ---------- */
+.wrap{padding:20px 24px 90px}
+.hrow{grid-template-columns:1fr minmax(0,860px) 1fr}
+.hs{max-width:860px}
+@media (min-width:1700px){.crow{--n:4}#picks{--n:8}#recent{--n:9}}
+@media (max-width:760px){.sugg{position:fixed;left:10px;right:10px;top:70px}.sgres{grid-template-columns:repeat(3,minmax(0,1fr))}.sgtiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.hhead .hrow{position:relative;z-index:6}
 </style>
 </head>
 <body>
@@ -654,12 +697,12 @@ html{scrollbar-color:var(--s3) transparent}
   <symbol id="i-low" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 15l5-4 4 3 3-2 6 4"/></g></symbol>
   <symbol id="i-cut" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h10M4 17h13"/></g></symbol>
   <symbol id="i-out" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14M10 16l4-4-4-4M14 12H4"/></g></symbol>
-  <symbol id="i-logo" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="11" height="13" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/><rect x="9.5" y="7.5" width="11" height="13" rx="2.6" fill="currentColor"/></symbol>
+  <symbol id="i-side" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></symbol><symbol id="i-logo" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="11" height="13" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/><rect x="9.5" y="7.5" width="11" height="13" rx="2.6" fill="currentColor"/></symbol>
   <symbol id="i-g" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></symbol>
 </svg>
 
 <aside class="side" id="side">
-  <div class="sbrand"><a class="mark" href="#" data-v="home" aria-label="trace 홈"><svg width="18" height="18"><use href="#i-logo"/></svg></a><a class="wm" href="#" data-v="home">trace</a><button class="ib thm" id="thm" aria-label="화면 밝기 바꾸기" title="라이트·다크 모드"><svg width="19" height="19" class="i-sun"><use href="#i-sun"/></svg><svg width="19" height="19" class="i-moon"><use href="#i-moon"/></svg></button></div>
+  <div class="sbrand"><a class="mark" href="#" data-v="home" aria-label="trace 홈"><svg width="18" height="18"><use href="#i-logo"/></svg></a><a class="wm" href="#" data-v="home">trace</a><button class="ib" id="sideTog" aria-label="왼쪽 메뉴 접기" title="메뉴 접기 (Ctrl + \)"><svg width="19" height="19"><use href="#i-side"/></svg></button><button class="ib thm" id="thm" aria-label="화면 밝기 바꾸기" title="라이트·다크 모드"><svg width="19" height="19" class="i-sun"><use href="#i-sun"/></svg><svg width="19" height="19" class="i-moon"><use href="#i-moon"/></svg></button></div>
   <label class="ssrch"><svg width="16" height="16"><use href="#i-search"/></svg><input id="q" placeholder="디자인 검색" autocomplete="off"><span class="kbd">/</span></label>
   <nav class="snav">
     <button class="si" data-v="home"><svg width="19" height="19"><use href="#i-home"/></svg>홈</button>
@@ -694,7 +737,7 @@ html{scrollbar-color:var(--s3) transparent}
     <!-- HOME -->
     <section class="view on" id="v-home">
       <div class="hhead">
-        <div class="hrow"><span></span><form class="hs" id="hform" role="search"><svg width="18" height="18" class="hsi"><use href="#i-remix"/></svg><input id="hq" placeholder="찾는 디자인을 말로 설명해 보세요. 예: 비 오는 네온 거리" autocomplete="off"><button type="submit" class="hsgo" aria-label="검색"><svg width="18" height="18"><use href="#i-search"/></svg></button></form><div class="hacct" id="hacct"></div></div>
+        <div class="hrow"><span></span><form class="hs" id="hform" role="search"><svg width="18" height="18" class="hsi"><use href="#i-remix"/></svg><input id="hq" placeholder="찾는 디자인을 말로 설명해 보세요. 예: 비 오는 네온 거리" autocomplete="off"><button type="submit" class="hsgo" aria-label="검색"><svg width="18" height="18"><use href="#i-search"/></svg></button><div class="sugg" id="sugg" role="listbox" aria-label="검색 미리보기"></div></form><div class="hacct" id="hacct"></div></div>
         <div class="trend" id="trend"><span class="tl">인기 검색어</span></div>
         <div class="ctabs"><div class="ctrack" id="ctabs"></div><div class="cmw"><button class="ct2 cmore" id="cMore" aria-expanded="false"><span>더보기</span><svg width="14" height="14"><use href="#i-down"/></svg></button><div class="cpop" id="cPop" hidden></div></div></div>
       </div>
@@ -925,7 +968,7 @@ function cardHTML(d,i){return `<div class="card" data-i="${i}" role="button" tab
   <div class="ph" data-i="${i}" style="aspect-ratio:${d.ar}"><div class="sk"></div><span class="pill">원본</span><span class="pill g">AI 생성</span>
   <button class="hv${saved.has(d.id)?' on':''}" data-h="${i}" aria-label="보관함에 저장"><svg width="19" height="19"><use href="#i-heart"/></svg></button></div>
   <div class="cb"><div class="tt"><b>${esc(d.title)}</b><small>${esc(d.cat)}<span class="stars">${stars(d.score)}</span></small></div></div></div>`}
-function colsFor(el){const w=el.clientWidth||innerWidth-150;const g=isMob()?10:16;return Math.max(2,Math.min(6,Math.floor((w+g)/(236+g))))}
+function colsFor(el){const w=el.clientWidth||innerWidth-150;const g=isMob()?10:16;return Math.max(2,Math.min(8,Math.floor((w+g)/(220+g))))}
 function masonry(el,L){const n=colsFor(el);el.dataset.n=n;const cols=Array.from({length:n},()=>({h:0,html:[]}));
   L.forEach(([d,i])=>{const [w,h]=d.ar.split('/').map(Number);const c=cols.reduce((a,b)=>b.h<a.h-.01?b:a);c.html.push(cardHTML(d,i));c.h+=h/w+.28});
   el.innerHTML=cols.map(c=>`<div class="col">${c.html.join('')}</div>`).join('');
@@ -1068,7 +1111,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(!b
 document.addEventListener('click',e=>{const b=e.target.closest('[data-sort]');if(!b)return;state.sort=b.dataset.sort;state.cat='전체';renderChips();go('explore')});
 function search(v){state.q=v;$('#q').value=v;state.cat='전체';renderChips();if(state.view!=='explore')go('explore');else renderFeed(true)}
 let qt;$('#q').addEventListener('input',e=>{clearTimeout(qt);qt=setTimeout(()=>search(e.target.value),200)});
-$('#hform').onsubmit=e=>{e.preventDefault();search($('#hq').value)};
+
 ['네온','그라데이션','레트로 포스터','손글씨','캐릭터','빈티지'].forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=()=>{$('#hq').value=t;search(t)};$('#trend').appendChild(b)});
 $('#mSearch').onclick=()=>{go('explore');setTimeout(()=>$('#mq').focus(),50)};let mqt;$('#mq').addEventListener('input',e=>{clearTimeout(mqt);mqt=setTimeout(()=>{state.q=e.target.value;renderFeed(true)},200)});
 addEventListener('scroll',()=>$('#top').classList.toggle('sc',scrollY>8),{passive:true});
@@ -1109,7 +1152,7 @@ function raState(id){const r=$('#'+id);const max=r.scrollWidth-r.clientWidth-2;$
 ['cols','picks'].forEach(id=>$('#'+id).addEventListener('scroll',()=>raState(id),{passive:true}));
 ['#recent','#picks'].forEach(id=>$(id).addEventListener('click',e=>{const c=e.target.closest('.mc');if(!c)return;state.list=[...$(id).querySelectorAll('.mc')].map(x=>+x.dataset.i);openModal(+c.dataset.i,c.querySelector('img'))}));
 $('#recentClear').onclick=()=>{recent=[];const k=rkey();if(k)try{localStorage.removeItem(k)}catch(e){}renderRecent();toast('최근 본 기록을 지웠어요')};
-$('#hform').onsubmit=e=>{e.preventDefault();search($('#hq').value)};
+$('#hform').onsubmit=e=>{e.preventDefault();addHist($('#hq').value);closeSugg();$('#hq').blur();search($('#hq').value)};
 function home(){renderTabs();
   $('#cols').innerHTML=CATS.map(c=>{const its=D.map((d,i)=>[d,i]).filter(([d])=>d.cat===c).sort((a,b)=>b[0].score-a[0].score||a[1]-b[1]).slice(0,3);
     return `<button class="cc" data-c="${esc(c)}"><span class="ccm">${its.map(([d],k)=>`<img src="${k?d.gen:d.org}" alt="" loading="lazy">`).join('')}</span><b>${esc(c)}</b><small>디자인 ${D.filter(d=>d.cat===c).length}개 · 프롬프트 ${D.filter(d=>d.cat===c).length*3}개</small></button>`}).join('');
@@ -1158,6 +1201,37 @@ let dp;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e});
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')&&document.querySelector('link[rel=manifest]'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 $('#navN').textContent=D.length;syncVT();renderChips();$$('.si[data-v=home]').forEach(b=>b.classList.add('on'));badge(false);try{if(sessionStorage.getItem('pw-bye')){sessionStorage.removeItem('pw-bye');setTimeout(()=>toast('로그아웃했어요'),400)}}catch(e){}
 AUTH.init();home();
+/* ---------- sidebar collapse ---------- */
+(function(){const k='pw-side';const set=(c,first)=>{document.documentElement.classList.toggle('side-c',c);try{localStorage.setItem(k,c?'1':'')}catch(e){}
+  $('#sideTog').setAttribute('aria-label',c?'왼쪽 메뉴 펼치기':'왼쪽 메뉴 접기');$('#sideTog').title=c?'메뉴 펼치기 (Ctrl + \\)':'메뉴 접기 (Ctrl + \\)';if(!first)setTimeout(()=>window.dispatchEvent(new Event('resize')),300)};
+  let c=false;try{c=localStorage.getItem(k)==='1'}catch(e){}set(c,true);
+  $('#sideTog').onclick=()=>set(!document.documentElement.classList.contains('side-c'));
+  document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='\\'){e.preventDefault();$('#sideTog').click()}});
+  document.querySelectorAll('.side .si').forEach(b=>{if(!b.title)b.title=[...b.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim()});$('#acct').title='내 계정';
+  $('.ssrch').addEventListener('click',()=>{if(document.documentElement.classList.contains('side-c')){set(false);setTimeout(()=>$('#q').focus(),280)}});})();
+/* ---------- search preview ---------- */
+const TREND=['네온','그라데이션','레트로 포스터','손글씨','캐릭터','빈티지'];
+let qhist=[];try{qhist=JSON.parse(sessionStorage.getItem('pw-qhist')||'[]')}catch(e){}
+function addHist(v){v=(v||'').trim();if(!v)return;qhist=[v,...qhist.filter(x=>x!==v)].slice(0,6);try{sessionStorage.setItem('pw-qhist',JSON.stringify(qhist))}catch(e){}}
+function previewFor(q){const sq=state.q,sc=state.cat,ss=state.sort;state.q=q;state.cat='전체';state.sort='';const L=filtered();state.q=sq;state.cat=sc;state.sort=ss;return L}
+function renderSugg(){const s=$('#sugg'),q=$('#hq').value.trim();let html='';
+  if(!q){if(qhist.length)html+=`<h4>최근 검색</h4><div class="sgchips">${qhist.map(t=>`<button type="button" data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div>`;
+    html+=`<h4>인기 아이디어</h4><div class="sgtiles">${TREND.map(t=>{const d=previewFor(t)[0]?.[0];return `<button type="button" class="sgtile" data-q="${esc(t)}">${d?`<img src="${d.org}" alt="">`:''}<span>${esc(t)}</span></button>`}).join('')}</div>`}
+  else{const L=previewFor(q);const cats=[...new Set(L.map(x=>x[0].cat))].slice(0,5);
+    if(!L.length)html=`<p class="sgnone">"${esc(q)}"에 맞는 디자인이 없어요. 다른 단어로 찾아보세요.</p>`;
+    else{if(cats.length>1)html+=`<h4>분야</h4><div class="sgchips">${cats.map(c=>`<button type="button" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}</div>`;
+      html+=`<h4>디자인</h4><div class="sgres">${L.slice(0,isMob()?6:12).map(([d,i])=>`<button type="button" class="sgr" data-open="${i}"><span class="im"><img src="${d.org}" alt=""></span><b>${esc(d.title)}</b></button>`).join('')}</div>`;
+      html+=`<button type="button" class="sgall" data-q="${esc(q)}">"${esc(q)}" 결과 ${L.length}개 모두 보기</button>`}}
+  s.innerHTML=html;s.classList.add('on')}
+function closeSugg(){$('#sugg').classList.remove('on')}
+let sgt;$('#hq').addEventListener('focus',renderSugg);$('#hq').addEventListener('input',()=>{clearTimeout(sgt);sgt=setTimeout(renderSugg,120)});
+$('#hq').addEventListener('keydown',e=>{if(e.key==='Escape'){closeSugg();e.target.blur()}});
+$('#sugg').addEventListener('mousedown',e=>e.preventDefault());
+$('#sugg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;e.stopPropagation();closeSugg();$('#hq').blur();
+  if(b.dataset.open!==undefined){openModal(+b.dataset.open);return}
+  if(b.dataset.cat){const v=$('#hq').value;addHist(v);search(v);state.cat=b.dataset.cat;renderFeed(true);return}
+  const v=b.dataset.q;$('#hq').value=v;addHist(v);search(v)});
+$('#hq').addEventListener('blur',()=>setTimeout(closeSugg,150));
 </script>
 </body>
 </html>
