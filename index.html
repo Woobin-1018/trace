@@ -324,7 +324,7 @@ mark{background:var(--acl);color:var(--ac);border-radius:5px;padding:1px 4px;out
 .gd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .gc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;box-shadow:var(--sh)}
 .gc.w{grid-column:span 2}
-.gc .gi{width:42px;height:42px;border-radius:13px;background:var(--acl);color:var(--ac);display:grid;place-items:center;margin-bottom:14px}
+.gc .gico{width:42px;height:42px;border-radius:13px;background:var(--acl);color:var(--ac);display:flex;align-items:center;justify-content:center;padding:0;margin-bottom:14px}.gc .gico svg{display:block;flex:none}
 .gc h3{font-size:18px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
 .gc p,.gc li{font-size:14px;color:var(--t2);line-height:1.7}
 .gc ol,.gc ul{padding-left:18px;margin-top:6px}
@@ -519,7 +519,7 @@ body{font-size:14px}
 @media (max-width:980px){.hleft .quick{flex:none}}
 
 /* ===== v15 home (Cosmos / Dribbble style) ===== */
-.hhead{position:sticky;top:0;z-index:18;background:var(--bg);margin:0 -28px 6px;padding:18px 28px 0}
+.hhead{position:sticky;top:0;z-index:18;background:var(--bg);margin:0 -28px 6px;padding:10px 28px 0}
 .hs{display:flex;align-items:center;gap:10px;height:50px;max-width:720px;margin:0 auto;padding:0 6px 0 18px;border-radius:25px;background:var(--card);border:1px solid var(--line2);transition:border-color .15s,box-shadow .2s}
 .hs:focus-within{border-color:var(--acm);box-shadow:0 0 0 4px var(--acl)}
 .hsi{color:var(--ac);flex:none}
@@ -722,7 +722,7 @@ html{scrollbar-color:var(--s3) transparent}
     <section class="view" id="v-help">
       <div class="xhead"><div><h1>도움말</h1><p>프롬프트를 고르고, 고치고, 직접 만들어 쓰는 방법이에요</p></div></div>
       <div class="gd">
-        <div class="gc w"><div class="gi"><svg width="22" height="22"><use href="#i-cut"/></svg></div><h3>프롬프트 3종, 이렇게 쓰세요</h3>
+        <div class="gc w"><div class="gico"><svg width="22" height="22"><use href="#i-cut"/></svg></div><h3>프롬프트 3종, 이렇게 쓰세요</h3>
           <ol>
             <li><b>기본 프롬프트</b> — GPT Image, Gemini, Higgsfield 같은 도구에 그대로 붙여 넣어요. 맨 끝의 저해상도 지시까지 함께 복사돼요.</li>
             <li><b>텍스트 추가 문장</b> — 이미지에 글자가 필요할 때만 기본 프롬프트 뒤에 붙여요. "기본 + 텍스트 합쳐서 복사"를 누르면 한 번에 복사돼요.</li>
@@ -730,7 +730,7 @@ html{scrollbar-color:var(--s3) transparent}
           </ol>
           <p style="margin-top:10px">상세 창의 <b>프롬프트</b> 칸에서 색 띠에 마우스를 올리면, 각 부분이 그림의 무엇을 정하는지 볼 수 있어요.</p>
         </div>
-        <div class="gc"><div class="gi"><svg width="22" height="22"><use href="#i-ko"/></svg></div><h3>한글 글자를 넣고 싶을 때</h3>
+        <div class="gc"><div class="gico"><svg width="22" height="22"><use href="#i-ko"/></svg></div><h3>한글 글자를 넣고 싶을 때</h3>
           <ul>
             <li><b>문구는 따옴표 안에 정확히</b> 적어요. AI가 글자를 지어내지 않게 해요.</li>
             <li><b>짧게</b> 써요. 한 줄에 몇 글자 정도가 가장 잘 나오고, 긴 문장일수록 글자가 깨지기 쉬워요.</li>
@@ -739,12 +739,12 @@ html{scrollbar-color:var(--s3) transparent}
           </ul>
           <code>Add the Korean (Hangul) headline <mark>"꿈보다 해몽"</mark> in bold sans-serif at the top; keep every character complete and correctly spelled.</code>
         </div>
-        <div class="gc"><div class="gi"><svg width="22" height="22"><use href="#i-low"/></svg></div><h3>왜 저해상도로 만드나요?</h3>
+        <div class="gc"><div class="gico"><svg width="22" height="22"><use href="#i-low"/></svg></div><h3>왜 저해상도로 만드나요?</h3>
           <p>trace의 생성 이미지는 모두 <b>0.5MB 이하</b>로 만들었어요. 웹에 바로 올리기 좋고, 이미지를 많이 담아도 가볍게 열려요.</p>
           <code><mark>Render at low resolution (about 768 px on the long side), web-optimized, lightweight file.</mark></code>
           <p style="margin-top:10px">Midjourney에서는 <b>--q 0.5</b>가 같은 역할을 해요. 크게 쓸 이미지라면 이 부분만 지우세요.</p>
         </div>
-        <div class="gc w"><div class="gi"><svg width="22" height="22"><use href="#i-star"/></svg></div><h3>재현도는 이렇게 매겼어요</h3>
+        <div class="gc w"><div class="gico"><svg width="22" height="22" fill="currentColor"><use href="#i-star"/></svg></div><h3>재현도는 이렇게 매겼어요</h3>
           <p>모든 프롬프트를 Gemini에서 실제로 돌리고, 원본과 결과를 나란히 놓고 제작자가 직접 비교했어요. 차이 노트에는 비슷한 점과 달라진 점을 함께 적었어요. 주관이 들어간 평가라 참고용으로 봐 주세요.</p>
           <div class="scale"><div><b><span class="stars" id="sc5"></span>거의 같아요</b><p>구성·색·분위기가 원본과 거의 같아요</p></div><div><b><span class="stars" id="sc4"></span>핵심은 같아요</b><p>아이디어와 분위기는 같고, 세부가 조금 달라요</p></div><div><b><span class="stars" id="sc3"></span>느낌만 같아요</b><p>방향은 맞지만, 모양이나 색이 꽤 달라요</p></div></div>
         </div>
@@ -853,7 +853,7 @@ const AUTH={sb:null,user:null,online:false,
     saved=new Set([...remote,...saved]);persist();badge(false);refreshHearts();if(state.view==='saved')renderSaved()},
   async push(id,on){if(!this.user)return;try{on?await this.sb.from('pw_saves').upsert({user_id:this.user.id,item_id:id,course:COURSE}):await this.sb.from('pw_saves').delete().eq('item_id',id).eq('course',COURSE)}catch(e){}},
   login(){this.sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href.split('#')[0]}})},
-  async logout(){await this.sb.auth.signOut();toast('로그아웃했어요')}
+  async logout(){try{await this.sb.auth.signOut()}catch(e){}try{localStorage.removeItem(LKEY);localStorage.removeItem('pw-recent');sessionStorage.setItem('pw-bye','1')}catch(e){}location.reload()}
 };
 function renderWho(){const u=AUTH.user,w=$('#who');
   const n=u?(u.user_metadata?.full_name||u.email):'',p=u?.user_metadata?.avatar_url;
@@ -1105,7 +1105,8 @@ const toggleTheme=()=>{const L=document.documentElement.dataset.theme!=='light';
   try{localStorage.setItem('pw-theme',L?'light':'')}catch(e){}document.querySelector('meta[name=theme-color]').content=L?'#F6F6F8':'#141416';toast(L?'라이트 모드로 바꿨어요':'다크 모드로 바꿨어요')};$('#thm').onclick=toggleTheme;$('#thm2').onclick=toggleTheme;
 let dp;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e});
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')&&document.querySelector('link[rel=manifest]'))navigator.serviceWorker.register('sw.js').catch(()=>{});
-$('#navN').textContent=D.length;syncVT();renderChips();$$('.si[data-v=home]').forEach(b=>b.classList.add('on'));badge(false);AUTH.init();home();
+$('#navN').textContent=D.length;syncVT();renderChips();$$('.si[data-v=home]').forEach(b=>b.classList.add('on'));badge(false);try{if(sessionStorage.getItem('pw-bye')){sessionStorage.removeItem('pw-bye');setTimeout(()=>toast('로그아웃했어요'),400)}}catch(e){}
+AUTH.init();home();
 </script>
 </body>
 </html>
