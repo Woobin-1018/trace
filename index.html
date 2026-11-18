@@ -841,21 +841,24 @@ async function copy(s,m){try{await navigator.clipboard.writeText(s)}catch(e){con
 
 /* ---------- auth + saves ---------- */
 const LKEY='pw-saved-'+COURSE;
-let saved=new Set();try{saved=new Set(JSON.parse(localStorage.getItem(LKEY)||'[]'))}catch(e){}
-const persist=()=>{try{localStorage.setItem(LKEY,JSON.stringify([...saved]))}catch(e){}};
+const CANLOG=!!CFG.url&&!CFG.url.startsWith('__')&&location.protocol.startsWith('http');
+let saved=new Set();
+if(CANLOG){try{localStorage.removeItem(LKEY);localStorage.removeItem('pw-recent')}catch(e){}}
+else{try{saved=new Set(JSON.parse(localStorage.getItem(LKEY)||'[]'))}catch(e){}}
+const persist=()=>{if(CANLOG)return;try{localStorage.setItem(LKEY,JSON.stringify([...saved]))}catch(e){}};
 const AUTH={sb:null,user:null,online:false,
   async init(){
     this.online=!!CFG.url&&!CFG.url.startsWith('__')&&location.protocol.startsWith('http');
     if(!this.online){renderWho();return}
     try{const {createClient}=await import('https://esm.sh/@supabase/supabase-js@2');this.sb=createClient(CFG.url,CFG.key);
       let want=false;const hm=location.hash.match(/^#login(?:&s=([^&]*))?/);
-      if(hm){want=true;if(hm[1]){decodeURIComponent(hm[1]).split(',').filter(Boolean).forEach(x=>saved.add(x));persist()}try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
+      if(hm){want=true;if(hm[1]){try{sessionStorage.setItem('pw-pending',decodeURIComponent(hm[1]))}catch(e){}}try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
       const {data}=await this.sb.auth.getSession();await this.set(data.session?.user||null);
       if(want&&!this.user)this.login();else if(want&&this.user){await this.pull();toast('보관함을 계정에 합쳤어요')}
       this.sb.auth.onAuthStateChange((_e,s)=>this.set(s?.user||null));
     }catch(e){this.online=false;renderWho()}
   },
-  async set(u){const was=this.user?.id;this.user=u;renderWho();renderHello();if(u&&u.id!==was){await this.pull()}},
+  async set(u){const was=this.user?.id;this.user=u;renderWho();renderHello();if(u&&u.id!==was){loadRecent();try{const pd=sessionStorage.getItem('pw-pending');if(pd){pd.split(',').filter(Boolean).forEach(x=>saved.add(x));sessionStorage.removeItem('pw-pending')}}catch(e){}await this.pull()}},
   async pull(){const {data,error}=await this.sb.from('pw_saves').select('item_id').eq('course',COURSE);if(error)return;
     const remote=new Set(data.map(r=>r.item_id));const add=[...saved].filter(x=>!remote.has(x));
     if(add.length)await this.sb.from('pw_saves').upsert(add.map(item_id=>({user_id:this.user.id,item_id,course:COURSE})));
@@ -891,7 +894,7 @@ function closeLogin(){$('#dim2').classList.remove('on');$('#lm').classList.remov
 $('#gLogin').onclick=()=>{if(AUTH.online)return AUTH.login();if(CFG.web&&!CFG.web.startsWith('__')){const s=[...saved];window.open(CFG.web+'#login'+(s.length?'&s='+encodeURIComponent(s.join(',')):''),'_blank','noopener');closeLogin()}};$('#lClose').onclick=closeLogin;$('#dim2').onclick=closeLogin;
 function renderSavedNote(){const n=$('#sNote');if(!n)return;
   if(AUTH.user){n.innerHTML=`<svg width="20" height="20" style="color:var(--ac)"><use href="#i-check"/></svg><span><b>${esc(AUTH.user.user_metadata?.full_name||AUTH.user.email)}</b>님 계정에 저장되고 있어요. 다른 기기에서도 볼 수 있어요.</span>`}
-  else n.innerHTML=`<svg width="20" height="20" style="color:var(--ac)"><use href="#i-saved"/></svg><span>지금은 <b>이 기기에만</b> 저장돼요. 로그인하면 다른 기기에서도 볼 수 있어요.</span><button class="btn pri" onclick="openLogin()">로그인</button>`}
+  else n.innerHTML=CANLOG?`<svg width="20" height="20" style="color:var(--ac)"><use href="#i-saved"/></svg><span>보관함은 <b>로그인한 뒤</b> 쓸 수 있어요. 하트를 누른 디자인이 계정에 모여요.</span>`+'<button class="btn pri" onclick="openLogin()">로그인</button>':`<svg width="20" height="20" style="color:var(--ac)"><use href="#i-saved"/></svg><span>지금은 <b>이 기기에만</b> 저장돼요. 로그인하면 다른 기기에서도 볼 수 있어요.</span><button class="btn pri" onclick="openLogin()">로그인</button>`}
 
 /* ---------- lazy images ---------- */
 const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;const el=en.target;io.unobserve(el);const d=D[+el.dataset.i];
@@ -946,7 +949,7 @@ function badge(bump){const n=saved.size;[$('#savedN'),$('#savedN2')].forEach(b=>
 function refreshHearts(){$$('[data-h]').forEach(b=>b.classList.toggle('on',saved.has(D[+b.dataset.h].id)));if(state.cur>=0)$('#mHeart').classList.toggle('on',saved.has(D[state.cur].id))}
 
 /* ---------- save / fly ---------- */
-function toggleSave(i,btn){const d=D[i];const on=!saved.has(d.id);on?saved.add(d.id):saved.delete(d.id);persist();AUTH.push(d.id,on);refreshHearts();
+function toggleSave(i,btn){const d=D[i];if(CANLOG&&!AUTH.user){openLogin();toast('보관하려면 로그인해 주세요');return}const on=!saved.has(d.id);on?saved.add(d.id):saved.delete(d.id);persist();AUTH.push(d.id,on);refreshHearts();
   if(btn&&!RM)btn.animate([{transform:'scale(1)'},{transform:'scale(1.35)',offset:.4},{transform:'scale(1)'}],{duration:450,easing:SPR});
   on?fly(i,btn):badge(false);toast(on?(AUTH.user?'보관함에 담았어요':'보관함에 담았어요. 이 기기에 저장돼요'):'보관함에서 뺐어요');
   if(state.view==='saved'&&state.cur<0)renderSaved()}
@@ -1041,8 +1044,10 @@ $('#mSearch').onclick=()=>{go('explore');setTimeout(()=>$('#mq').focus(),50)};le
 addEventListener('scroll',()=>$('#top').classList.toggle('sc',scrollY>8),{passive:true});
 
 /* ---------- home ---------- */
-const RKEY='pw-recent';let recent=[];try{recent=JSON.parse(localStorage.getItem(RKEY)||'[]')}catch(e){}
-function pushRecent(id){recent=[id,...recent.filter(x=>x!==id)].slice(0,16);try{localStorage.setItem(RKEY,JSON.stringify(recent))}catch(e){}}
+const rkey=()=>CANLOG?(AUTH.user?'pw-recent-'+AUTH.user.id:null):'pw-recent';let recent=[];
+function loadRecent(){const k=rkey();recent=[];if(k)try{recent=JSON.parse(localStorage.getItem(k)||'[]')}catch(e){}if(typeof renderRecent==='function')renderRecent()}
+if(!CANLOG)try{recent=JSON.parse(localStorage.getItem('pw-recent')||'[]')}catch(e){}
+function pushRecent(id){recent=[id,...recent.filter(x=>x!==id)].slice(0,16);const k=rkey();if(k)try{localStorage.setItem(k,JSON.stringify(recent))}catch(e){}}
 let hcat='추천',hfeedN=0,hList=[];const AUTO_MAX=50;
 const mixOrder=(()=>{const by={};D.forEach((d,i)=>{(by[d.cat]=by[d.cat]||[]).push(i)});const out=[];for(let k=0;k<10;k++)CATS.forEach((c,j)=>{const a=by[c];out.push(a[(k*3+j)%a.length])});return [...new Set(out.concat(D.map((_,i)=>i)))]})();
 function cardMini(d,i){return `<button class="mc" data-i="${i}"><span class="mci"><img src="${d.gen}" alt="" loading="lazy"><img class="g" src="${d.org}" alt="" loading="lazy"></span><b>${esc(d.title)}</b><small>${esc(d.cat)}</small></button>`}
@@ -1073,7 +1078,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('.ra');if(!b)retu
 function raState(id){const r=$('#'+id);const max=r.scrollWidth-r.clientWidth-2;$$(`.ra[data-row=${id}]`).forEach(b=>b.disabled=(+b.dataset.d<0?r.scrollLeft<=2:r.scrollLeft>=max))}
 ['cols','picks'].forEach(id=>$('#'+id).addEventListener('scroll',()=>raState(id),{passive:true}));
 ['#recent','#picks'].forEach(id=>$(id).addEventListener('click',e=>{const c=e.target.closest('.mc');if(!c)return;state.list=[...$(id).querySelectorAll('.mc')].map(x=>+x.dataset.i);openModal(+c.dataset.i,c.querySelector('img'))}));
-$('#recentClear').onclick=()=>{recent=[];try{localStorage.removeItem(RKEY)}catch(e){}renderRecent();toast('최근 본 기록을 지웠어요')};
+$('#recentClear').onclick=()=>{recent=[];const k=rkey();if(k)try{localStorage.removeItem(k)}catch(e){}renderRecent();toast('최근 본 기록을 지웠어요')};
 $('#hform').onsubmit=e=>{e.preventDefault();search($('#hq').value)};
 function home(){renderTabs();
   $('#cols').innerHTML=CATS.map(c=>{const its=D.map((d,i)=>[d,i]).filter(([d])=>d.cat===c).sort((a,b)=>b[0].score-a[0].score||a[1]-b[1]).slice(0,3);
