@@ -824,6 +824,44 @@ html.side-c .sfoot .si{width:100%}
 @media (max-width:900px){.abh h1{font-size:34px}.abs.two{grid-template-columns:1fr;gap:12px}.steps{grid-template-columns:1fr}.gf1{grid-template-columns:1fr 1fr}.gfb{grid-column:1/-1}}
 @media (max-width:760px){.ab{padding-top:18px}.abh h1{font-size:30px}.abstat div+div{border-left:0;padding-left:0}.abstat{display:grid;grid-template-columns:1fr 1fr}.gfoot{margin-top:64px;padding-bottom:90px}.gfgh{margin-left:0}}
 .gfl .mark{margin:0;flex:none}
+/* ---------- calmer sizing (closer to common sites) ---------- */
+.hs{height:44px;padding:0 4px 0 16px;border-radius:22px}.hs input{font-size:14.5px}
+.hsgo{width:36px;height:36px}
+.hacct .ava{width:34px;height:34px;font-size:13px}.hacct .btn{height:34px;padding:0 14px;font-size:13.5px}
+.ct2{height:32px;padding:0 13px;font-size:13.5px}
+.trend{margin-top:8px;font-size:12.5px}.trend button{height:26px;padding:0 11px;font-size:12.5px}
+.si{height:34px;font-size:13.5px}
+.hinfo h1{font-size:22px;font-weight:700}.hd{font-size:14px}.hk{font-size:12px}
+.hcmp{height:clamp(260px,36vh,400px)}
+.hero{gap:32px;margin-top:20px}
+.rowh h2{font-size:16px}.xhead h1{font-size:23px;font-weight:700}
+.card b{font-size:14px;font-weight:600}
+.abh h1{font-size:38px}.abh p{font-size:15.5px}.abstat dd{font-size:21px}.abs h2{font-size:20px}.abs.two h2{font-size:16px}
+.steps b{font-size:15px}.steps p,.prin p,.abtxt p,.faq details p,.maker p{font-size:14px}.faq summary{font-size:14.5px}
+/* footer & spacing */
+.wrap{padding-bottom:28px}
+.gfoot{margin-top:72px;padding:32px 0 4px}
+.gfb p,.gfc a{font-size:13px}.gfc b{font-size:12.5px}
+.gf2{margin-top:28px;padding-top:16px;font-size:12px}
+@media (max-width:760px){.wrap{padding-bottom:90px}.gfoot{margin-top:56px;padding-bottom:0}.hs{height:44px}}
+/* credit report link */
+.rep{font-size:12.5px;font-weight:600;color:var(--t3);text-decoration:underline;text-underline-offset:3px;padding:0}.rep:hover{color:var(--t1)}
+/* ---------- contact ---------- */
+.cf{margin-top:32px;display:grid;gap:22px;max-width:640px}
+.cfk{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}.cfk legend{font-size:14px;font-weight:700;margin-bottom:10px;padding:0}
+.cfk label{cursor:pointer}.cfk input{position:absolute;opacity:0;pointer-events:none}
+.cfk span{display:inline-flex;align-items:center;height:36px;padding:0 15px;border-radius:18px;border:1px solid var(--line2);font-size:13.5px;font-weight:600;color:var(--t2);transition:background .15s,color .15s}
+.cfk input:checked+span{background:var(--ink);border-color:var(--ink);color:var(--onink)}
+.cfk input:focus-visible+span{outline:2px solid var(--ac);outline-offset:2px}
+.cfl{display:grid;gap:8px;font-size:14px;font-weight:700;position:relative}.cfl small{font-weight:500;color:var(--t3);margin-left:6px;font-size:12.5px}
+.cfl input,.cfl textarea{font:inherit;font-size:14.5px;font-weight:500;color:var(--t1);background:var(--bg);border:1px solid var(--line2);border-radius:10px;padding:11px 13px;outline:0;transition:border-color .15s,box-shadow .15s;resize:vertical}
+.cfl input:focus,.cfl textarea:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--acl)}
+.cfc{position:absolute;right:12px;bottom:10px;font-size:12px;font-weight:500;color:var(--t3)}
+.cferr{margin:-8px 0 0;font-size:13px;color:#E5484D;min-height:0}
+.cfa{display:flex;flex-wrap:wrap;align-items:center;gap:14px}.cfn{font-size:12.5px;color:var(--t3)}.cfn a{color:var(--t2)}
+.cfdone{margin-top:40px;max-width:640px;padding:28px;border:1px solid var(--line);border-radius:16px}
+.cfdone .ok{width:40px;height:40px;border-radius:50%;background:#16A34A;color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.cfdone b{font-size:18px}.cfdone p{font-size:14px;color:var(--t2);margin:6px 0 18px}
 </style>
 </head>
 <body>
@@ -923,7 +961,6 @@ html.side-c .sfoot .si{width:100%}
       <div class="hsec2" id="topSec"><div class="rowh"><h2>원본과 거의 같은 디자인</h2><div class="rowa"><button class="more" data-sort="score">모두 보기</button><button class="ra" data-row="picks" data-d="-1" aria-label="이전"><svg width="16" height="16"><use href="#i-l"/></svg></button><button class="ra" data-row="picks" data-d="1" aria-label="다음"><svg width="16" height="16"><use href="#i-r"/></svg></button></div></div><div class="crow" id="picks"></div></div>
       <div class="hsec2"><div class="rowh"><h2 id="feedH">디자인 둘러보기</h2></div>
         <div class="feed" id="hfeed"></div><div id="hmore" class="hmore"><span></span></div><div class="hmbtn" id="hmBtnW" style="display:none"><button class="btn sec lg" id="hmBtn">더 보기</button></div></div>
-      <div class="foot"><div><b>trace</b> 디자인 프롬프트 도감<br>AI 대시보드, AI 데이터자동화 12주차 과제<br>만든 사람 조우빈, 차이나데이터큐레이션 202300898</div><div>원본 이미지는 Pinterest 각 게시물에서, 생성 이미지는 Google Gemini로 만들었어요. 광고 디자인의 브랜드 이름은 가상 이름으로 바꿨어요.</div></div>
     </section>
 
     <!-- EXPLORE -->
@@ -1032,7 +1069,7 @@ html.side-c .sfoot .si{width:100%}
           <div class="abtxt">
             <p>원본 이미지는 Pinterest에 공개된 이미지를 참고 자료로 모은 것이고, 저작권은 각 원작자에게 있어요. 상세 창의 <b>원본 출처</b> 링크에서 수집한 곳을 확인할 수 있어요.</p>
             <p>AI 생성 이미지는 trace가 Google Gemini로 만든 결과예요. 광고 디자인에 나오는 브랜드 이름은 실제 브랜드와 헷갈리지 않도록 가상의 이름으로 바꿨어요.</p>
-            <p>원작자이거나 게시를 원하지 않는 이미지가 있다면 <a href="https://github.com/Woobin-1018/trace/issues" target="_blank" rel="noopener">GitHub 이슈</a>로 알려 주세요. 확인하는 대로 내릴게요.</p>
+            <p>원작자이거나 게시를 원하지 않는 이미지가 있다면 <a href="#" data-v="contact">문의와 신고</a>로 알려 주세요. 확인하는 대로 내릴게요.</p>
           </div>
         </section>
 
@@ -1061,7 +1098,27 @@ html.side-c .sfoot .si{width:100%}
         <section class="abs two"><h2>쓰는 곳</h2><div class="abtxt"><p>로그인한 사용자를 확인하고, 보관함을 여러 기기에서 같게 보여 주는 데에만 써요. 광고나 마케팅에 쓰지 않고, 다른 곳에 팔거나 넘기지 않아요.</p></div></section>
         <section class="abs two"><h2>맡기는 곳</h2><div class="abtxt"><p>로그인 처리와 보관함 저장은 Supabase, 로그인은 Google, 웹페이지 제공은 GitHub Pages가 맡아요.</p></div></section>
         <section class="abs two"><h2>이 기기에 남는 정보</h2><div class="abtxt"><p>화면 테마, 왼쪽 메뉴를 접었는지, 최근 본 디자인을 브라우저에 저장해요. 로그아웃하면 보관함과 최근 본 디자인 기록을 이 기기에서 지워요.</p></div></section>
-        <section class="abs two"><h2>보관 기간과 삭제</h2><div class="abtxt"><p>서비스를 운영하는 동안 보관하고, 운영을 마치면 모두 지워요. 계정 기록 삭제를 원하면 <a href="https://github.com/Woobin-1018/trace/issues" target="_blank" rel="noopener">GitHub 이슈</a>로 요청해 주세요.</p></div></section>
+        <section class="abs two"><h2>보관 기간과 삭제</h2><div class="abtxt"><p>서비스를 운영하는 동안 보관하고, 운영을 마치면 모두 지워요. 계정 기록 삭제를 원하면 <a href="#" data-v="contact">문의와 신고</a>로 요청해 주세요.</p></div></section>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="view" id="v-contact">
+      <div class="ab doc">
+        <header class="abh sm"><h1>문의와 신고</h1><p>궁금한 점, 오류, 게시 중단 요청을 보내 주세요. 보통 3일 안에 확인해요.</p></header>
+        <form class="cf" id="cform" novalidate>
+          <fieldset class="cfk"><legend>어떤 내용인가요?</legend>
+            <label><input type="radio" name="kind" value="문의" checked><span>일반 문의</span></label>
+            <label><input type="radio" name="kind" value="오류"><span>오류 신고</span></label>
+            <label><input type="radio" name="kind" value="게시 중단"><span>저작권·게시 중단 요청</span></label>
+          </fieldset>
+          <label class="cfl"><span>관련 디자인<small>선택</small></span><input id="cfItem" placeholder="예: 404 에러 포스터 (상세 창의 신고 버튼을 누르면 자동으로 채워져요)" maxlength="80"></label>
+          <label class="cfl"><span>답장 받을 이메일<small>선택</small></span><input id="cfMail" type="email" placeholder="name@example.com" maxlength="120" autocomplete="email"></label>
+          <label class="cfl"><span>내용</span><textarea id="cfMsg" rows="6" maxlength="2000" placeholder="게시 중단 요청이라면 원작자임을 알 수 있는 링크를 함께 적어 주세요"></textarea><span class="cfc" id="cfCnt">0 / 2000</span></label>
+          <p class="cferr" id="cfErr" role="alert"></p>
+          <div class="cfa"><button class="btn pri" id="cfSend">보내기</button><span class="cfn">보낸 내용은 답변과 처리에만 써요. <a href="#" data-v="privacy">개인정보처리방침</a></span></div>
+        </form>
+        <div class="cfdone" id="cfDone" hidden><span class="ok"><svg width="22" height="22"><use href="#i-check"/></svg></span><b>보냈어요</b><p>확인하는 대로 처리할게요. 이메일을 남기셨다면 그 주소로 답장드려요.</p><button class="btn line" id="cfAgain">하나 더 보내기</button></div>
       </div>
     </section>
 
@@ -1070,9 +1127,9 @@ html.side-c .sfoot .si{width:100%}
         <div class="gfb"><a class="gfl" href="#" data-v="home"><span class="mark sm"><svg width="16" height="16"><use href="#i-logo"/></svg></span>trace</a><p>본 디자인을 직접 만들 수 있게,<br>검증한 이미지 프롬프트를 모아요.</p></div>
         <nav class="gfc" aria-label="둘러보기"><b>둘러보기</b><a href="#" data-v="home">홈</a><a href="#" data-v="explore">탐색</a><a href="#" data-v="remix">리믹스</a><a href="#" data-v="saved">보관함</a></nav>
         <nav class="gfc" aria-label="알아보기"><b>알아보기</b><a href="#" data-v="about">trace 소개</a><a href="#" data-v="help">도움말</a><a href="#" data-about="ab-copy">출처와 저작권</a></nav>
-        <nav class="gfc" aria-label="정책"><b>정책</b><a href="#" data-v="privacy">개인정보처리방침</a><a href="https://github.com/Woobin-1018/trace/issues" target="_blank" rel="noopener">문의와 신고</a></nav>
+        <nav class="gfc" aria-label="정책"><b>정책</b><a href="#" data-v="privacy">개인정보처리방침</a><a href="#" data-v="contact">문의와 신고</a></nav>
       </div>
-      <div class="gf2"><span>© 2026 trace · 만든 사람 조우빈</span><span>원본 이미지의 저작권은 각 원작자에게 있어요</span><a class="gfgh" href="https://github.com/Woobin-1018/trace" target="_blank" rel="noopener" aria-label="GitHub"><svg width="18" height="18"><use href="#i-gh"/></svg></a></div>
+      <div class="gf2"><span>© 2026 trace · 만든 사람 조우빈</span><span>AI 대시보드 · AI 데이터자동화 12주차 과제 (차이나데이터큐레이션 202300898)</span><span>원본 이미지의 저작권은 각 원작자에게 있어요</span><a class="gfgh" href="https://github.com/Woobin-1018/trace" target="_blank" rel="noopener" aria-label="GitHub"><svg width="18" height="18"><use href="#i-gh"/></svg></a></div>
     </footer>
   </div>
 </main>
@@ -1555,7 +1612,7 @@ let TOK=null;const STOP=new Set('with and the for into from that this over under
 function toks(d){return new Set((d.base+' '+d.mj).toLowerCase().match(/[a-z][a-z-]{3,}/g)?.filter(w=>!STOP.has(w))||[])}
 function similar(i,n=6){TOK=TOK||D.map(toks);const A=TOK[i];return D.map((d,k)=>{if(k===i)return[k,-1];const B=TOK[k];let c=0;A.forEach(w=>{if(B.has(w))c++});return[k,c/(A.size+B.size-c||1)+(d.cat===D[i].cat?.12:0)+(d.score>=5?.02:0)]}).sort((a,b)=>b[1]-a[1]).slice(0,n).map(x=>x[0])}
 const _fill=fill;fill=function(i){_fill(i);const d=D[i];
-  $('#mCredit').innerHTML=d.src?`원본 출처 <a href="${esc(d.src)}" target="_blank" rel="noopener noreferrer">${srcName(d.src)}<svg width="12" height="12"><use href="#i-ext"/></svg></a><span>· 원본의 저작권은 원작자에게 있어요</span>`:'';
+  $('#mCredit').innerHTML=d.src?`원본 출처 <a href="${esc(d.src)}" target="_blank" rel="noopener noreferrer">${srcName(d.src)}<svg width="12" height="12"><use href="#i-ext"/></svg></a><span>· 원본의 저작권은 원작자에게 있어요 ·</span><button class="rep" data-report="${esc(d.id)}">신고</button>`:'';
   $('#sim').innerHTML=similar(i).map(k=>`<button class="smi" data-sim="${k}" title="${esc(D[k].title)}"><span class="im"><img src="${D[k].org}" alt="" loading="lazy"></span><b>${esc(D[k].title)}</b><small>${esc(D[k].cat)} · 재현도 ${D[k].score}/5</small></button>`).join('');
   $('#bmenu').classList.remove('on');setHash('#d/'+encodeURIComponent(d.id))};
 $('#sim').addEventListener('click',e=>{const b=e.target.closest('[data-sim]');if(!b)return;const k=+b.dataset.sim;if(!state.list.includes(k))state.list=D.map((_,j)=>j);fill(k);
@@ -1569,6 +1626,21 @@ openFromHash();window.addEventListener('hashchange',()=>{if(state.cur<0)openFrom
   const P=D.map((d,i)=>[d,i]).filter(([d])=>+d.score>=5);const [d,i]=P[Math.floor(Math.random()*P.length)];
   $('#abPair').innerHTML=`<div><img src="${d.org}" alt="${esc(d.title)} 원본" loading="lazy"><span>원본</span></div><div><img src="${d.gen}" alt="${esc(d.title)} AI 생성" loading="lazy"><span>AI로 따라 만든 결과</span></div><figcaption>${esc(d.title)} · 재현도 ${d.score}/5 · 재현도 5점은 전체 ${D.length}개 중 ${top}개예요</figcaption>`})();
 document.addEventListener('click',e=>{const a=e.target.closest('[data-about]');if(!a)return;e.preventDefault();go('about');setTimeout(()=>document.getElementById(a.dataset.about)?.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}),120)});
+/* ---------- contact form ---------- */
+$('#cfMsg').addEventListener('input',e=>{$('#cfCnt').textContent=`${e.target.value.length} / 2000`});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-report]');if(!b)return;const d=D.find(x=>x.id===b.dataset.report);closeModal();
+  setTimeout(()=>{go('contact');$('#cform').hidden=false;$('#cfDone').hidden=true;$('#cfItem').value=d?`${d.no} ${d.title}`:'';const r=$('#cform input[value="게시 중단"]');if(r)r.checked=true;$('#cfMsg').focus()},250)});
+$('#cform').onsubmit=async e=>{e.preventDefault();const err=$('#cfErr'),btn=$('#cfSend');err.textContent='';
+  const kind=$('#cform input[name=kind]:checked').value,item=$('#cfItem').value.trim(),email=$('#cfMail').value.trim(),msg=$('#cfMsg').value.trim();
+  if(msg.length<5){err.textContent='내용을 5자 이상 적어 주세요.';$('#cfMsg').focus();return}
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='이메일 주소를 다시 확인해 주세요.';$('#cfMail').focus();return}
+  if(!AUTH.sb){err.innerHTML=CFG.web&&!CFG.web.startsWith('__')?`이 파일에서는 보낼 수 없어요. <a href="${CFG.web}" target="_blank" rel="noopener">웹 버전</a>에서 보내 주세요.`:'지금은 보낼 수 없어요. 잠시 뒤 다시 시도해 주세요.';return}
+  btn.disabled=true;btn.textContent='보내는 중';
+  try{const {error}=await AUTH.sb.from('trace_contact').insert({kind,item_id:item||null,email:email||null,message:msg});if(error)throw error;
+    $('#cform').reset();$('#cfCnt').textContent='0 / 2000';$('#cform').hidden=true;$('#cfDone').hidden=false}
+  catch(x){err.textContent='보내지 못했어요. 잠시 뒤 다시 시도해 주세요.'}
+  finally{btn.disabled=false;btn.textContent='보내기'}};
+$('#cfAgain').onclick=()=>{$('#cfDone').hidden=true;$('#cform').hidden=false};
 </script>
 </body>
 </html>
