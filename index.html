@@ -939,6 +939,23 @@ html.side-c .sfoot .si{width:100%}
 .hamb{filter:blur(40px) saturate(1.3);will-change:auto}
 #upPrev[hidden]{display:none!important}
 .lab .form{max-height:none}
+
+.fc.more{gap:4px;color:var(--t1)}
+.fc.more .chv{transition:transform .2s var(--out)}
+.fc.more.open .chv{transform:rotate(180deg)}
+.pkbar{position:relative;display:block;margin-bottom:14px}
+.pkdd{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 12px 0 14px;border-radius:19px;border:1px solid var(--line2);background:var(--card);font-size:13.5px;font-weight:600;color:var(--t1)}
+.pkdd:hover{background:var(--s2)}
+.pkdd span{color:var(--t3)}.pkdd small{font-size:12px;font-weight:600;color:var(--t3)}
+.pkdd svg{color:var(--t3);transition:transform .2s var(--out)}
+.pkdd[aria-expanded="true"] svg{transform:rotate(180deg)}
+.pkmenu{position:absolute;z-index:20;top:46px;left:0;width:min(460px,100%);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.12);animation:pkin .18s var(--out)}
+.pkmenu[hidden]{display:none!important}
+.pkmenu button{display:flex;align-items:center;justify-content:space-between;gap:6px;height:36px;padding:0 10px;border-radius:9px;font-size:13px;font-weight:600;color:var(--t2);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pkmenu button:hover{background:var(--s2);color:var(--t1)}
+.pkmenu button.on{background:var(--ink);color:var(--onink)}
+.pkmenu small{font-size:11.5px;font-weight:600;opacity:.6}
+@keyframes pkin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -1442,9 +1459,10 @@ let chipOpen=false;
 function renderChips(){catOptions($('#fCat'),state.cat);$('#fSort').value=state.sort;renderSideCats();renderFChips()}
 const CK='<svg width="14" height="14" class="ck"><use href="#i-check"/></svg>';
 function renderFChips(){const el=$('#fchips');if(!el)return;const sel=c=>state.cats.has(c)||state.cat===c;const none=!state.cats.size&&state.cat==='전체';
-  el.innerHTML=`<button class="fc${state.top5?' on':''}" data-fk="top5">${CK}재현도 5점</button><button class="fc${state.txt?' on':''}" data-fk="txt">${CK}글자 들어간 디자인</button><span class="fsep"></span><button class="fc${none?' on':''}" data-fk="all">${CK}전체 분야</button>`+CATS.map(c=>`<button class="fc${sel(c)?' on':''}" data-fcat="${esc(c)}">${CK}${esc(c)}</button>`).join('')}
+  el.innerHTML=`<button class="fc${state.top5?' on':''}" data-fk="top5">${CK}재현도 5점</button><button class="fc${state.txt?' on':''}" data-fk="txt">${CK}글자 들어간 디자인</button><span class="fsep"></span><button class="fc${none?' on':''}" data-fk="all">${CK}전체 분야</button>`+(()=>{const K=6;let vis=chipOpen?CATS.slice():CATS.slice(0,K);if(!chipOpen)CATS.slice(K).forEach(c=>{if(sel(c))vis.push(c)});const rest=CATS.length-vis.length;
+    return vis.map(c=>`<button class="fc${sel(c)?' on':''}" data-fcat="${esc(c)}">${CK}${esc(c)}</button>`).join('')+(CATS.length>K?`<button class="fc more${chipOpen?' open':''}" data-fk="more" aria-expanded="${chipOpen}">${chipOpen?'접기':'더보기 '+rest}<svg width="14" height="14" class="chv"><use href="#i-down"/></svg></button>`:'')})()}
 document.addEventListener('click',e=>{const b=e.target.closest('#fchips .fc');if(!b)return;const k=b.dataset.fk,c=b.dataset.fcat;
-  if(k==='top5')state.top5=!state.top5;else if(k==='txt')state.txt=!state.txt;else if(k==='all'){state.cats.clear();state.cat='전체'}
+  if(k==='more'){chipOpen=!chipOpen;renderFChips();return}if(k==='top5')state.top5=!state.top5;else if(k==='txt')state.txt=!state.txt;else if(k==='all'){state.cats.clear();state.cat='전체'}
   else if(c){if(state.cat!=='전체'){state.cats=new Set([state.cat]);state.cat='전체'}state.cats.has(c)?state.cats.delete(c):state.cats.add(c)}
   renderFeed(true)});
 $('#fCat').onchange=e=>{state.cat=e.target.value;renderFeed(true)};$('#fSort').onchange=e=>{state.sort=e.target.value;renderFeed(true)};
@@ -1789,9 +1807,12 @@ const _rfc=renderFChips;renderFChips=function(){_rfc();const on=state.top5||stat
 document.addEventListener('click',e=>{if(!e.target.closest('#fReset'))return;Object.assign(state,{top5:false,txt:false,cat:'전체',q:''});state.cats.clear();$('#q').value='';$('#hq').value='';renderFeed(true);toast('필터를 모두 풀었어요')});
 /* ---------- remix: mode switch, category filter, AI ---------- */
 var PKC='전체';
-function renderPkbar(){$('#pkbar').innerHTML=['전체',...CATS].map(c=>`<button class="fc${PKC===c?' on':''}" data-pkc="${esc(c)}"><svg width="14" height="14" class="ck"><use href="#i-check"/></svg>${esc(c)}</button>`).join('')}
+function renderPkbar(){const cnt=c=>c==='전체'?D.length:D.filter(d=>d.cat===c).length;
+  $('#pkbar').innerHTML=`<button class="pkdd" id="pkdd" aria-haspopup="true" aria-expanded="false"><span>주제</span><b>${esc(PKC)}</b><small>${cnt(PKC)}</small><svg width="14" height="14"><use href="#i-down"/></svg></button><div class="pkmenu" id="pkmenu" hidden>`+['전체',...CATS].map(c=>`<button class="${PKC===c?'on':''}" data-pkc="${esc(c)}">${esc(c)}<small>${cnt(c)}</small></button>`).join('')+`</div>`}
 renderPkbar();
-$('#pkbar').addEventListener('click',e=>{const b=e.target.closest('[data-pkc]');if(!b)return;PKC=b.dataset.pkc;renderPkbar();picked=false;initPick()});
+document.addEventListener('click',e=>{if(!e.target.closest('#pkbar')){const m=$('#pkmenu');if(m&&!m.hidden){m.hidden=true;$('#pkdd').setAttribute('aria-expanded','false')}}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=$('#pkmenu');if(m&&!m.hidden){m.hidden=true;e.stopPropagation()}}},true);
+$('#pkbar').addEventListener('click',e=>{if(e.target.closest('#pkdd')){const m=$('#pkmenu'),o=m.hidden;m.hidden=!o;$('#pkdd').setAttribute('aria-expanded',o);return}const b=e.target.closest('[data-pkc]');if(!b)return;PKC=b.dataset.pkc;renderPkbar();picked=false;initPick()});
 $('#rAi').innerHTML=aiHTML();$('#upAi').innerHTML=aiHTML();
 $('#rAi').addEventListener('click',e=>{const b=e.target.closest('[data-ai]');if(!b)return;const d=state.rSel!=null?D[state.rSel]:null,tp=$('#rTopic').value.trim(),tx=$('#rText').value.trim();
   if(!d||!tp){toast(!d?'스타일을 먼저 골라 주세요':'만들 주제를 적어 주세요');return}openAI(b.dataset.ai,remixPrompt(d,tp,tx,'g'),remixPrompt(d,tp,tx,'m'),d.id)});
