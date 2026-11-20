@@ -1494,7 +1494,7 @@ function openModal(i,srcImg){const first=!$('#modal').classList.contains('on');i
     }else{M.animate([{opacity:0,transform:isMob()?'translateY(30px)':'translate(-50%,-50%) scale(.95)'},{opacity:1,transform:isMob()?'none':'translate(-50%,-50%)'}],{duration:340,easing:OUT});hint()}
   }else hint()}
 function hint(){if(RM)return;const t0=performance.now();const f=n=>{const p=Math.min(1,(n-t0)/1100);const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;setX(50-26*Math.sin(e*Math.PI));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
-function closeModal(){const M=$('#modal');const end=()=>{if(state.view==='home')renderRecent();M.classList.remove('on');$('#dim').classList.remove('on');$$('.nav2').forEach(b=>b.classList.remove('on'));document.body.style.overflow='';state.cur=-1;if(state.view==='saved')renderSaved()};
+function closeModal(){try{setHash('')}catch(e){}const M=$('#modal');const end=()=>{if(state.view==='home')renderRecent();M.classList.remove('on');$('#dim').classList.remove('on');$$('.nav2').forEach(b=>b.classList.remove('on'));document.body.style.overflow='';state.cur=-1;if(state.view==='saved')renderSaved()};
   if(RM||isMob()){end();return}$('#dim').classList.remove('on');$$('.nav2').forEach(b=>b.classList.remove('on'));
   M.animate([{opacity:1,transform:'translate(-50%,-50%)'},{opacity:0,transform:'translate(-50%,-50%) scale(.96)'}],{duration:180,easing:IN}).onfinish=end}
 function step(k){const L=state.list;let p=L.indexOf(state.cur);if(p<0)return;p=(p+k+L.length)%L.length;fill(L[p]);
@@ -1732,8 +1732,7 @@ const _fill=fill;fill=function(i){_fill(i);const d=D[i];
   $('#bmenu').classList.remove('on');setHash('#d/'+encodeURIComponent(d.id))};
 $('#sim').addEventListener('click',e=>{const b=e.target.closest('[data-sim]');if(!b)return;const k=+b.dataset.sim;if(!state.list.includes(k))state.list=D.map((_,j)=>j);fill(k);
   if(!RM)$('#mL').animate([{opacity:.3},{opacity:1}],{duration:280,easing:OUT});hint();$('#mb').scrollTo({top:0,behavior:RM?'auto':'smooth'})});
-const _close=closeModal;closeModal=function(){setHash('');_close()};
-function openFromHash(){const m=location.hash.match(/^#d\/(.+)$/);if(!m)return;const id=decodeURIComponent(m[1]);const i=D.findIndex(d=>d.id===id);if(i>=0)setTimeout(()=>openModal(i),350)}
+let _first=true;function openFromHash(){const m=location.hash.match(/^#d\/(.+)$/);if(!m)return;if(_first){_first=false;let nt='';try{nt=performance.getEntriesByType('navigation')[0].type}catch(e){}if(nt==='reload'||nt==='back_forward'){setHash('');return}}const id=decodeURIComponent(m[1]);const i=D.findIndex(d=>d.id===id);if(i>=0)setTimeout(()=>openModal(i),350)}
 openFromHash();window.addEventListener('hashchange',()=>{if(state.cur<0)openFromHash()});
 /* ---------- about page data ---------- */
 (function(){const avg=(D.reduce((s,d)=>s+ +d.score,0)/D.length).toFixed(1),cats=new Set(D.map(d=>d.cat)).size,top=D.filter(d=>+d.score>=5).length;
