@@ -862,6 +862,10 @@ html.side-c .sfoot .si{width:100%}
 .cfdone{margin-top:40px;max-width:640px;padding:28px;border:1px solid var(--line);border-radius:16px}
 .cfdone .ok{width:40px;height:40px;border-radius:50%;background:#16A34A;color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
 .cfdone b{font-size:18px}.cfdone p{font-size:14px;color:var(--t2);margin:6px 0 18px}
+
+/* explore chips: wrap on wide screens, no faded edge */
+.fchips{flex-wrap:wrap;overflow:visible;-webkit-mask-image:none;mask-image:none;row-gap:8px}
+@media (max-width:760px){.fchips{flex-wrap:nowrap;overflow-x:auto}}
 </style>
 </head>
 <body>
@@ -1447,7 +1451,7 @@ const rkey=()=>CANLOG?(AUTH.user?'pw-recent-'+AUTH.user.id:null):'pw-recent';let
 function loadRecent(){const k=rkey();recent=[];if(k)try{recent=JSON.parse(localStorage.getItem(k)||'[]')}catch(e){}if(typeof renderRecent==='function')renderRecent()}
 if(!CANLOG)try{recent=JSON.parse(localStorage.getItem('pw-recent')||'[]')}catch(e){}
 function pushRecent(id){recent=[id,...recent.filter(x=>x!==id)].slice(0,16);const k=rkey();if(k)try{localStorage.setItem(k,JSON.stringify(recent))}catch(e){}}
-let hcat='추천',hfeedN=0,hList=[];const AUTO_MAX=50;
+let hcat='추천',hfeedN=0,hList=[];const AUTO_MAX=Infinity;
 const mixOrder=(()=>{const by={};D.forEach((d,i)=>{(by[d.cat]=by[d.cat]||[]).push(i)});const out=[];for(let k=0;k<10;k++)CATS.forEach((c,j)=>{const a=by[c];out.push(a[(k*3+j)%a.length])});return [...new Set(out.concat(D.map((_,i)=>i)))]})();
 function cardMini(d,i){return `<button class="mc" data-i="${i}"><span class="mci"><img src="${d.gen}" alt="" loading="lazy"><img class="g" src="${d.org}" alt="" loading="lazy"></span><b>${esc(d.title)}</b><small>${esc(d.cat)}</small></button>`}
 function renderRecent(){const L=recent.map(id=>D.findIndex(d=>d.id===id)).filter(i=>i>=0);$('#recentSec').style.display=L.length?'block':'none';$('#recent').innerHTML=L.map(i=>cardMini(D[i],i)).join('')}
