@@ -977,7 +977,9 @@ html.side-c .sfoot .si{width:100%}
 
 /* remix panel: follows the scroll, always fits the window */
 @media (min-width:761px){
-.lab .form{position:sticky;top:76px;max-height:calc(100vh - 92px);padding:16px 18px;overflow:hidden}
+.rcol{position:sticky;top:76px;display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 92px)}
+.rcol .seg.inr{align-self:stretch;display:flex}.rcol .seg.inr button{flex:1}
+.lab .form{position:static;min-height:0;padding:16px 18px;overflow:hidden}
 .lab .form .stp{margin:2px 0 8px}
 .lab .form .stp .n{min-width:20px;height:20px;font-size:11px}
 .lab .form .sel{padding:6px 10px;margin-bottom:12px}
@@ -993,6 +995,14 @@ html.side-c .sfoot .si{width:100%}
 .lab .form>*{flex-shrink:0}.lab .form>.out{flex-shrink:1}
 }
 @media (min-width:761px) and (max-height:700px){.lab .form .pnote{display:none}}
+
+.rcol{min-width:0}
+/* hero: frame hugs the image */
+.hcin .hl{top:10px;height:24px;padding:0 9px;font-size:11.5px}.hcin .hl.l{left:10px}.hcin .hl.r{right:10px}
+@media (min-width:1101px){
+.hero{grid-template-columns:auto minmax(320px,1fr);gap:48px}
+.hcmp{--hh:clamp(280px,40vh,440px);height:var(--hh);width:calc(var(--hh) * var(--ar,1) + 112px);max-width:min(760px,58vw)}
+}
 </style>
 </head>
 <body>
@@ -1073,7 +1083,7 @@ html.side-c .sfoot .si{width:100%}
       <div class="hero" id="heroSec">
         <div class="hcmp" id="hcmp" aria-label="원본과 AI 생성 비교. 좌우로 끌어 보세요"><div class="hamb" id="hcAmb" aria-hidden="true"></div>
           <div class="hcin" id="hcIn"><img id="hcO" alt=""><div class="hcg" id="hcG"><img id="hcGi" alt=""></div>
-          <span class="hl l">원본</span><span class="hl r">AI로 따라 만든 결과</span>
+          <span class="hl l">원본</span><span class="hl r">AI 생성</span>
           <div class="hbar" id="hcBar"><span class="hknob"><svg width="16" height="16"><use href="#i-drag"/></svg></span></div>
           <input type="range" min="0" max="100" value="50" id="hcR" aria-label="비교 위치"></div>
         </div>
@@ -1112,7 +1122,7 @@ html.side-c .sfoot .si{width:100%}
         <div class="seg" id="rxMode" role="tablist"><button class="on" data-m="style" role="tab">trace 스타일로</button><button data-m="img" role="tab">내 이미지로</button></div></div>
       <div class="lab" id="rxStyle">
         <div class="pickw"><div class="pkbar" id="pkbar"></div><div class="pick" id="pick"></div></div>
-        <div class="form">
+        <div class="rcol"><div class="form">
           <div class="stp"><span class="n">1</span><b>스타일</b><small>왼쪽에서 하나 골라요</small></div>
           <div class="sel"><img id="rImg" alt=""><div><small id="rCat">아직 고르지 않았어요</small><b id="rTitle">스타일을 골라 주세요</b></div></div>
           <div class="stp"><span class="n">2</span><b>무엇을 만들까요</b></div>
@@ -1123,7 +1133,7 @@ html.side-c .sfoot .si{width:100%}
           <p class="pnote" id="rNote">원본의 스타일·빛·색·구도 부분은 그대로 두고, 주제 부분만 바꿔요. 저해상도 지시도 자동으로 붙어요.</p>
           <div class="prow"><button class="btn pri" id="rCopy"><svg width="16" height="16"><use href="#i-copy"/></svg>복사하기</button></div>
           <div class="aiw" id="rAi"></div>
-        </div>
+        </div></div>
       </div>
       <div class="lab up" id="rxImg" hidden>
         <div class="upl">
@@ -1132,7 +1142,7 @@ html.side-c .sfoot .si{width:100%}
             <img id="upPrev" alt="올린 이미지" hidden><button type="button" class="upx" id="upX" hidden aria-label="다른 이미지 고르기"><svg width="16" height="16"><use href="#i-x"/></svg></button></label>
           <div class="upact"><button class="btn pri" id="upGo"><svg width="16" height="16"><use href="#i-remix"/></svg>프롬프트 만들기</button><span class="uplim" id="upLim">로그인하면 하루 3번 만들 수 있어요</span></div>
         </div>
-        <div class="form">
+        <div class="rcol"><div class="form">
           <div class="stp"><span class="n">AI</span><b>이 이미지를 따라 만드는 프롬프트</b></div>
           <div class="upmeta" id="upMeta"></div>
           <div class="ptabs sm" id="upTabs"><button class="on" data-t="base">기본</button><button data-t="text">텍스트 추가</button><button data-t="mj">Midjourney</button></div>
@@ -1140,7 +1150,7 @@ html.side-c .sfoot .si{width:100%}
           <p class="pnote" id="upNote">생성 이미지와 원본이 똑같이 나오지는 않아요. 결과를 보고 리믹스처럼 주제만 바꿔 써도 좋아요.</p>
           <div class="prow"><button class="btn pri" id="upCopy"><svg width="16" height="16"><use href="#i-copy"/></svg>복사하기</button></div>
           <div class="aiw" id="upAi"></div>
-        </div>
+        </div></div>
       </div>
     </section>
 
@@ -1610,7 +1620,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-sort]');if
 function search(v){state.q=v;$('#q').value=v;state.cat='전체';state.cats.clear();renderChips();if(state.view!=='explore')go('explore');else renderFeed(true)}
 let qt;$('#q').addEventListener('input',e=>{clearTimeout(qt);qt=setTimeout(()=>search(e.target.value),200)});
 
-['네온','그라데이션','레트로 포스터','손글씨','캐릭터','빈티지'].forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=()=>{$('#hq').value=t;search(t)};$('#trend').appendChild(b)});
+['네온','그러데이션','레트로 포스터','손글씨','캐릭터','빈티지'].forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=()=>{$('#hq').value=t;search(t)};$('#trend').appendChild(b)});
 $('#mSearch').onclick=()=>{go('explore');setTimeout(()=>$('#mq').focus(),50)};let mqt;$('#mq').addEventListener('input',e=>{clearTimeout(mqt);mqt=setTimeout(()=>{state.q=e.target.value;renderFeed(true)},200)});
 addEventListener('scroll',()=>$('#top').classList.toggle('sc',scrollY>8),{passive:true});
 
@@ -1708,7 +1718,7 @@ AUTH.init();home();
   document.querySelectorAll('.side .si').forEach(b=>{if(!b.title)b.title=[...b.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim()});$('#acct').title='내 계정';
   $('.ssrch').addEventListener('click',()=>{if(document.documentElement.classList.contains('side-c')){set(false);setTimeout(()=>$('#q').focus(),280)}});})();
 /* ---------- search preview ---------- */
-const TREND=['네온','그라데이션','레트로 포스터','손글씨','캐릭터','빈티지'];
+const TREND=['네온','그러데이션','레트로 포스터','손글씨','캐릭터','빈티지'];
 let qhist=[];try{qhist=JSON.parse(sessionStorage.getItem('pw-qhist')||'[]')}catch(e){}
 function addHist(v){v=(v||'').trim();if(!v)return;qhist=[v,...qhist.filter(x=>x!==v)].slice(0,6);try{sessionStorage.setItem('pw-qhist',JSON.stringify(qhist))}catch(e){}}
 function previewFor(q){const sv={q:state.q,cat:state.cat,sort:state.sort,cats:state.cats,top5:state.top5,txt:state.txt};Object.assign(state,{q,cat:'전체',sort:'',cats:new Set(),top5:false,txt:false});const L=filtered();Object.assign(state,sv);return L}
@@ -1734,7 +1744,7 @@ $('#hq').addEventListener('blur',()=>setTimeout(closeSugg,150));
 /* ---------- hero compare ---------- */
 (function(){const HERO=D.map((d,i)=>[d,i]).filter(([d])=>d.score>=5).map(x=>x[1]);let k=0;const el=$('#hcmp'),R=$('#hcR');
   const setX=v=>{el.style.setProperty('--x',v+'%');R.value=v};
-  function show(n,anim){k=(n+HERO.length)%HERO.length;const i=HERO[k],d=D[i];$('#hcIn').style.aspectRatio=d.ar;$('#hcAmb').style.backgroundImage=`url(${d.org})`;$('#hcO').src=d.org;$('#hcGi').src=d.gen;$('#hcT').textContent=d.title;$('#hcD').textContent=d.desc;
+  function show(n,anim){k=(n+HERO.length)%HERO.length;const i=HERO[k],d=D[i];$('#hcIn').style.aspectRatio=d.ar;{const[w,h]=d.ar.split('/').map(Number);el.style.setProperty('--ar',(w/h).toFixed(4))}$('#hcAmb').style.backgroundImage=`url(${d.org})`;$('#hcO').src=d.org;$('#hcGi').src=d.gen;$('#hcT').textContent=d.title;$('#hcD').textContent=d.desc;
     $('#hcS').innerHTML=`<span>재현도 ${d.score}/5</span><span class="bar"><i style="width:${d.score*20}%"></i></span>`;$('#hcN').textContent=d.note?'차이: '+d.note:'';$('#hcC').textContent=`${k+1} / ${HERO.length}`;
     const inf=$('.hinfo');inf.classList.remove('swin');void inf.offsetWidth;inf.classList.add('swin');
     if(anim&&!RM){let t0=null;const step=ts=>{t0=t0??ts;const p=Math.min(1,(ts-t0)/1100),e=1-Math.pow(1-p,3);setX(100-50*e);if(p<1)requestAnimationFrame(step)};setX(100);requestAnimationFrame(step)}else setX(50)}
@@ -1857,8 +1867,10 @@ $('#rAi').innerHTML=aiHTML();$('#upAi').innerHTML=aiHTML();
 $('#rAi').addEventListener('click',e=>{const b=e.target.closest('[data-ai]');if(!b)return;const d=state.rSel!=null?D[state.rSel]:null,tp=$('#rTopic').value.trim(),tx=$('#rText').value.trim();
   if(!d||!tp){toast(!d?'스타일을 먼저 골라 주세요':'만들 주제를 적어 주세요');return}openAI(b.dataset.ai,remixPrompt(d,tp,tx,'g'),remixPrompt(d,tp,tx,'m'),d.id)});
 $('#rCopy').addEventListener('click',()=>{if($('#rOut').dataset.v&&state.rSel!=null)ev('copy',D[state.rSel].id)});
+function placeMode(){const m=$('#rxMode'),wide=innerWidth>760;const dst=wide?($('#rxImg').hidden?$('#rxStyle'):$('#rxImg')).querySelector('.rcol'):$('.rxh');if(m.parentElement!==dst)dst.prepend(m);m.classList.toggle('inr',wide)}
+addEventListener('resize',placeMode);placeMode();
 $('#rxMode').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;const img=b.dataset.m==='img';$$('#rxMode button').forEach(x=>x.classList.toggle('on',x===b));
-  $('#rxStyle').hidden=img;$('#rxImg').hidden=!img;$('#rxSub').textContent=img?'내가 가진 이미지를 올리면, AI가 이미지를 보고 비슷하게 만드는 프롬프트를 써 드려요':'마음에 드는 스타일을 고르고 주제만 적으면, 그 스타일을 살린 새 프롬프트를 만들어 드려요';if(img)upUsage()});
+  $('#rxStyle').hidden=img;$('#rxImg').hidden=!img;$('#rxSub').textContent=img?'내가 가진 이미지를 올리면, AI가 이미지를 보고 비슷하게 만드는 프롬프트를 써 드려요':'마음에 드는 스타일을 고르고 주제만 적으면, 그 스타일을 살린 새 프롬프트를 만들어 드려요';if(img)upUsage();placeMode()});
 /* ---------- image -> prompt ---------- */
 let UP={b64:null,res:null,tab:'base'};const FN=()=>CFG.url+'/functions/v1/trace-describe';
 async function upCall(body){const {data:{session}}=await AUTH.sb.auth.getSession();const r=await fetch(FN(),{method:'POST',headers:{'content-type':'application/json',apikey:CFG.key,authorization:'Bearer '+session.access_token},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||('오류 '+r.status));return j}
