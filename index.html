@@ -1010,7 +1010,8 @@ html.side-c .sfoot .si{width:100%}
 .hero{position:relative;isolation:isolate;overflow:hidden;grid-template-columns:auto minmax(300px,1fr) 250px;gap:40px;padding:24px 28px 24px 24px;border-radius:22px;background:var(--s2)}
 .hero::before{content:"";position:absolute;inset:-80px;z-index:-1;background:var(--hbg) center/cover;filter:blur(60px) saturate(1.3);opacity:.35}
 [data-theme=dark] .hero::before{opacity:.28}
-.hcmp{--hh:clamp(300px,44vh,460px);width:calc(var(--hh) * var(--ar,1));background:transparent;border-radius:10px;overflow:visible}
+.hcmp{--hh:clamp(300px,44vh,460px);width:clamp(320px,26vw,440px);background:transparent;border-radius:0;overflow:visible;box-shadow:none}
+.hcmp .hcin{position:relative;flex:none}
 .hcmp .hcin{border-radius:10px}
 .hcmp .hamb{display:none}
 .hq{display:flex;flex-direction:column;align-self:stretch;justify-content:center;gap:8px;border-left:1px solid var(--line);padding-left:24px}
@@ -1778,8 +1779,10 @@ $('#hq').addEventListener('blur',()=>setTimeout(closeSugg,150));
 
 /* ---------- hero compare ---------- */
 (function(){const HERO=D.map((d,i)=>[d,i]).filter(([d])=>d.score>=5).map(x=>x[1]);let k=0;const el=$('#hcmp'),R=$('#hcR');
-  const setX=v=>{el.style.setProperty('--x',v+'%');R.value=v};
-  function show(n,anim){k=(n+HERO.length)%HERO.length;const i=HERO[k],d=D[i];$('#hcIn').style.aspectRatio=arOf(d);cropImg($('#hcO'),d);{const[w,h]=arOf(d).split('/').map(Number);el.style.setProperty('--ar',(w/h).toFixed(4))}$('#hcAmb').style.backgroundImage=`url(${d.org})`;$('#heroSec').style.setProperty('--hbg',`url(${d.org})`);$('#hcO').src=d.org;$('#hcGi').src=d.gen;$('#hcT').textContent=d.title;$('#hcD').textContent=d.desc;
+  const setX=v=>{el.style.setProperty('--x',v+'%');R.value=v};let curAr='1/1';
+  const fitH=()=>{const [w,h]=curAr.split('/').map(Number),fw=el.clientWidth,fh=el.clientHeight,s=Math.min(fw/w,fh/h);const ci=$('#hcIn');if(innerWidth>1100){ci.style.width=Math.floor(w*s)+'px';ci.style.height=Math.floor(h*s)+'px'}else{ci.style.width=ci.style.height=''}};
+  addEventListener('resize',fitH);
+  function show(n,anim){k=(n+HERO.length)%HERO.length;const i=HERO[k],d=D[i];$('#hcIn').style.aspectRatio=arOf(d);curAr=arOf(d);fitH();cropImg($('#hcO'),d);{const[w,h]=arOf(d).split('/').map(Number);el.style.setProperty('--ar',(w/h).toFixed(4))}$('#hcAmb').style.backgroundImage=`url(${d.org})`;$('#heroSec').style.setProperty('--hbg',`url(${d.org})`);$('#hcO').src=d.org;$('#hcGi').src=d.gen;$('#hcT').textContent=d.title;$('#hcD').textContent=d.desc;
     $('#hcS').innerHTML=`<span>재현도 ${d.score}/5</span><span class="bar"><i style="width:${d.score*20}%"></i></span>`;$('#hcN').textContent=d.note?'차이: '+d.note:'';$('#hcC').textContent=`${k+1} / ${HERO.length}`;$('#hcQl').innerHTML=[1,2,3].map(o=>{const j=(k+o)%HERO.length,e=D[HERO[j]];return `<button class="hqi" data-hq="${j}"><img src="${e.org}" alt="" loading="lazy"><span><small>${esc(e.cat)}</small><b>${esc(e.title)}</b></span></button>`}).join('');
     const inf=$('.hinfo');inf.classList.remove('swin');void inf.offsetWidth;inf.classList.add('swin');
     if(anim&&!RM){let t0=null;const step=ts=>{t0=t0??ts;const p=Math.min(1,(ts-t0)/1100),e=1-Math.pow(1-p,3);setX(100-50*e);if(p<1)requestAnimationFrame(step)};setX(100);requestAnimationFrame(step)}else setX(50)}
