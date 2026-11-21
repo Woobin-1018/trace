@@ -968,13 +968,31 @@ html.side-c .sfoot .si{width:100%}
 .tmenu button:hover{background:var(--s2);color:var(--t1)}
 .tmenu button.on{background:var(--ink);color:var(--onink)}
 .tmenu small{font-size:11.5px;font-weight:600;opacity:.55}
-.lab .form{position:static}
 #v-remix{padding-bottom:40px}
 /* footer, aligned like product sites */
 .gf2{justify-content:space-between;align-items:flex-start;gap:12px 32px}
 .gf2l,.gf2r{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px}
 .gf2r .gfgh{margin-left:0}
 @media(min-width:901px){.gf1{grid-template-columns:1fr repeat(3,170px);gap:24px}.gfb{grid-column:auto}}
+
+/* remix panel: follows the scroll, always fits the window */
+@media (min-width:761px){
+.lab .form{position:sticky;top:76px;max-height:calc(100vh - 92px);padding:16px 18px;overflow:hidden}
+.lab .form .stp{margin:2px 0 8px}
+.lab .form .stp .n{min-width:20px;height:20px;font-size:11px}
+.lab .form .sel{padding:6px 10px;margin-bottom:12px}
+.lab .form .sel img{width:40px;height:40px}
+.lab .form .inp{height:40px;font-size:14px;margin-bottom:6px}
+.lab .form .inp+.stp{margin-top:10px}
+.lab .form .out{flex:1 1 auto;min-height:64px;max-height:240px;overflow:auto;padding:11px 13px;font-size:13px;line-height:1.65}
+.lab .form .pnote{font-size:12px;margin-top:8px;line-height:1.5}
+.lab .form .prow{margin-top:10px}
+.lab .form .prow .btn{height:42px}
+.lab .form .aiw{margin-top:10px}
+.lab .form .aiw .btn,.lab .form .aib button{height:36px}
+.lab .form>*{flex-shrink:0}.lab .form>.out{flex-shrink:1}
+}
+@media (min-width:761px) and (max-height:700px){.lab .form .pnote{display:none}}
 </style>
 </head>
 <body>
@@ -1384,12 +1402,12 @@ const AUTH={sb:null,user:null,online:false,
     }catch(e){this.online=false;renderWho()}
   },
   async set(u){const was=this.user?.id;this.user=u;renderWho();renderHello();if(u&&u.id!==was){loadRecent();try{const pd=sessionStorage.getItem('pw-pending');if(pd){pd.split(',').filter(Boolean).forEach(x=>boards[DEF].add(x));syncSaved();sessionStorage.removeItem('pw-pending')}}catch(e){}await this.pull()}},
-  async pull(){const {data,error}=await this.sb.from('pw_saves').select('item_id,course').like('course',COURSE+'%');if(error)return;
+  async pull(){const {data,error}=await this.sb.from('pw_saves').select('item_id,course').like('course',COURSE+'%');if(error){console.warn('load failed',error.message);toast('보관함을 불러오지 못했어요. 잠시 뒤 새로고침해 주세요');return}
     const have=new Set(),rb={[DEF]:new Set()};for(const r of data){const b=bOf(r.course);if(b===null)continue;rb[b]=rb[b]||new Set();if(r.item_id!=='__board__')rb[b].add(r.item_id);have.add(r.course+'|'+r.item_id)}
     const add=[];for(const b in boards){if(b!==DEF&&!have.has(bCourse(b)+'|__board__'))add.push({user_id:this.user.id,item_id:'__board__',course:bCourse(b)});boards[b].forEach(id=>{if(!have.has(bCourse(b)+'|'+id))add.push({user_id:this.user.id,item_id:id,course:bCourse(b)})})}
     if(add.length)await this.sb.from('pw_saves').upsert(add);
     for(const b in boards){rb[b]=rb[b]||new Set();boards[b].forEach(x=>rb[b].add(x))}boards=rb;persist();badge(false);refreshHearts();if(state.view==='saved')renderSaved()},
-  async push(id,on,b=DEF){if(!this.user)return;try{on?await this.sb.from('pw_saves').upsert({user_id:this.user.id,item_id:id,course:bCourse(b)}):await this.sb.from('pw_saves').delete().eq('item_id',id).eq('course',bCourse(b))}catch(e){}},
+  async push(id,on,b=DEF){if(!this.user)return;let er=null;try{const r=on?await this.sb.from('pw_saves').upsert({user_id:this.user.id,item_id:id,course:bCourse(b)}):await this.sb.from('pw_saves').delete().eq('item_id',id).eq('course',bCourse(b));er=r.error}catch(e){er=e}if(er){console.warn('save failed',er.message||er);setTimeout(()=>toast('계정에 저장하지 못했어요. 새로고침하면 사라질 수 있어요'),600)}},
   async bMake(b){if(!this.user)return;try{await this.sb.from('pw_saves').upsert({user_id:this.user.id,item_id:'__board__',course:bCourse(b)})}catch(e){}},
   async bDrop(b){if(!this.user)return;try{await this.sb.from('pw_saves').delete().eq('course',bCourse(b))}catch(e){}},
   login(){this.sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href.split('#')[0]}})},
